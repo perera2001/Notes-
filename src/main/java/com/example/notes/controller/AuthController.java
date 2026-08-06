@@ -1,6 +1,8 @@
 package com.example.notes.controller;
 
+import com.example.notes.dto.request.LoginRequestDTO;
 import com.example.notes.dto.request.RegisterRequestDTO;
+import com.example.notes.dto.response.LoginResponseDTO;
 import com.example.notes.dto.response.RegisterResponseDTO;
 import com.example.notes.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +19,10 @@ public class AuthController {
     @PostMapping("register")
     public RegisterResponseDTO RegisterUser(@RequestBody RegisterRequestDTO registerRequestDTO) {
         return authService.registerUser(registerRequestDTO);
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDTO loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+        return authService.login(loginRequestDTO);
     }
 }
