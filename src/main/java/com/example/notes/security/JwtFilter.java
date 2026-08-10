@@ -55,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                         .getAuthentication() == null) {
 
 
-
+            // loading the user
             UserDetails userDetails =
                     customUserDetailsService
                             .loadUserByUsername(email);
@@ -68,16 +68,16 @@ public class JwtFilter extends OncePerRequestFilter {
             )) {
 
 
-
+                // creating an authentication object
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
+                                userDetails,        //the authenticated user
+                                null,                //the password is unnecessary because the JWT was already validated
+                                userDetails.getAuthorities()  //the user’s roles, such as ROLE_USER or ROLE_ADMIN
                         );
 
 
-
+                 // saving the authenticated user - The JWT is valid, and this request belongs to this authenticated user.
                 SecurityContextHolder
                         .getContext()
                         .setAuthentication(authenticationToken);
@@ -87,7 +87,9 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
 
-
+         //This sends the request to the next security filter.
+        //
+        //After all filters finish, the request can reach the controller:
         filterChain.doFilter(
                 request,
                 response

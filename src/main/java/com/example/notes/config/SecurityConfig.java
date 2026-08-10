@@ -44,7 +44,7 @@ public class SecurityConfig {
 
                         .anyRequest()
                         .authenticated()
-                )
+                ) //Run our JwtFilter before Spring makes the authorization decision.
                 . addFilterBefore(
                 jwtFilter,
                 UsernamePasswordAuthenticationFilter.class
