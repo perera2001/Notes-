@@ -36,7 +36,7 @@ public class CustomUserDetailsService
 
             admin.setEmail(AdminConfig.ADMIN_EMAIL);
             admin.setPassword(AdminConfig.ADMIN_PASSWORD);
-            admin.setRole(Role.ROLE_USER);
+            admin.setRole(Role.ROLE_ADMIN);
 
             return new CustomUserDetails(admin);
         }
