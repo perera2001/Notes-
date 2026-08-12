@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NoteServiceIMPL implements NoteService {
     @Autowired
@@ -32,6 +34,20 @@ public class NoteServiceIMPL implements NoteService {
                 savedNote.getTitle(),
                 savedNote.getContent()
         );
+    }
+
+    @Override
+    public List<NoteResponseDTO> getMyNotes() {
+        User user = getLoggedInUser();
+
+        return noteRepository.findByUser(user)
+                .stream()
+                .map(note-> new NoteResponseDTO(
+                        note.getId(),
+                        note.getTitle(),
+                        note.getContent()
+                ))
+                .toList();
     }
 
     private User getLoggedInUser() {
